@@ -1,1 +1,3 @@
-
+ci_access:
+  projects:
+    - id: devops4115904/doodlestudent/
