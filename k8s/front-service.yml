@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    fr.doodle.service: front
+  name: front
+  namespace: doodle
+spec:
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 80
+  selector:
+    fr.doodle.service: front
+status:
+  loadBalancer: {}

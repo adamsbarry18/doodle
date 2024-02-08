@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    fr.doodle.service: doodle-etherpad
+  name: doodle-etherpad
+  namespace: doodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fr.doodle.service: doodle-etherpad
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        fr.doodle.service: doodle-etherpad
+    spec:
+      containers:
+      - image: etherpad/etherpad:1.8
+        name: etherpad-mysql
+        ports:
+        - containerPort: 9001
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/etherpad-lite/APIKEY.txt
+          name: doodle-etherpad-claim0
+          subPath: APIKEYtxt
+      restartPolicy: Always
+      volumes:
+      - name: doodle-etherpad-claim0
+        configMap:
+          name: etherpadapikey-cfgmap
+
+status: {}

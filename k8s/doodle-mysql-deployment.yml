@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    fr.doodle.service: doodle-mysql
+  name: doodle-mysql
+  namespace: doodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fr.doodle.service: doodle-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        fr.doodle.service: doodle-mysql
+    spec:
+      containers:
+      - name: doodle-mysql
+        image: mysql:8.0.20
+        args:
+        - mysqld
+        - "--lower_case_table_names=1"
+        - "--skip-ssl"
+        - "--character_set_server=utf8mb4"
+        - "--explicit_defaults_for_timestamp"
+        env:
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: 'yes'
+        - name: MYSQL_DATABASE
+          value: doodle
+        - name: MYSQL_USER
+          value: root
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d/v1.sql
+          name: doodle-mysql-claim0
+          subPath: v1Sql
+      restartPolicy: Always
+      volumes:
+      - name: doodle-mysql-claim0
+        configMap:
+          name: mysqlinit-cfgmap
+
+status: {}

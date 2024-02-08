@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    fr.doodle.service: phpmyadmin
+  name: phpmyadmin
+  namespace: doodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fr.doodle.service: phpmyadmin
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        fr.doodle.service: phpmyadmin
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: phpmyadmin
+        ports:
+        - containerPort: 80

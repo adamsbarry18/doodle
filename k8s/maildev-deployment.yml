@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    fr.doodle.service: maildev
+  name: maildev
+  namespace: doodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fr.doodle.service: maildev
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        fr.doodle.service: maildev
+    spec:
+      containers:
+      - name: maildev
+        image: bytemark/smtp
+        ports:
+        - containerPort: 25 # SMTP port
+

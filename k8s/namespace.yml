@@ -1,0 +1,8 @@
+# Deploys a new Namespace for the doodle Pods
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: doodle
+  labels:
+    name: doodle
+---

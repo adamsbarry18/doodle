@@ -1,0 +1,17 @@
+# Ignore everything
+*
+
+# But not these files...
+!pom.xml
+!src/
+!mvnw
+!mvnw.cmd
+!APIKEY.txt
+!docker-compose.yaml
+!Dockerfile
+!Dockerfile.native
+!README.md
+!target/*-runner
+!target/*-runner.jar
+!target/lib/*
+!target/quarkus-app/*

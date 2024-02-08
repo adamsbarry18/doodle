@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    fr.doodle.service: front
+  name: front
+  namespace: doodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fr.doodle.service: front
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        fr.doodle.service: front
+    spec:
+      containers:
+      - image: localhost:32000/mbarry/doodle-front
+        name: front
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

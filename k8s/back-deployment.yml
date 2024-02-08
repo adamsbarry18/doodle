@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    fr.doodle.service: back
+  name: back
+  namespace: doodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fr.doodle.service: back
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        fr.doodle.service: back
+    spec:
+      containers:
+        - args:
+            - ./application
+            - -Dquarkus.http.host=0.0.0.0
+            - -Dquarkus.datasource.username=root
+            - -Dquarkus.datasource.password=
+            - -Dquarkus.datasource.jdbc.url=jdbc:mysql://doodle-mysql:3306/tlc?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - -Dquarkus.http.cors=true
+            - -Dquarkus.http.cors.methods=GET,PUT,POST,DELETE,PATCH,OPTIONS
+            - -Dquarkus.http.cors.headers=accept,origin,authorization,content-type,x-requested-with
+            - -Dquarkus.http.cors.exposed-headers=Content-Disposition
+            - -Dquarkus.http.cors.access-control-max-age=24H
+            - -Dquarkus.mailer.from=olivier.barais@univ-rennes1.fr
+            - -Dquarkus.mailer.host=maildev
+            - -Dquarkus.mailer.port=1025
+            - -Dquarkus.mailer.ssl=false
+            - -Dquarkus.http.host=0.0.0.0
+            - -Ddoodle.internalPadUrl=http://doodle-etherpad:9001
+            - -Ddoodle.externalPadUrl=http://pad.tlc.fr/
+
+          env:
+            - name: MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED
+              value: "true"
+          image: localhost:32000/mbarry/doodle-back
+          name: back
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}
