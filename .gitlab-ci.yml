@@ -1,7 +1,7 @@
 
 variables:
-  IMAGE_TAG_FRONT: $CI_REGISTRY/devops4115904/doodlestudent/doodlefront
-  IMAGE_TAG_BACK: $CI_REGISTRY/devops4115904/doodlestudent/doodleback
+  IMAGE_TAG_FRONT: $CI_REGISTRY/devops4115904/doodlestudent/front/doodlefront
+  IMAGE_TAG_BACK: $CI_REGISTRY/devops4115904/doodlestudent/api/doodleback
 
 stages:
   - build
