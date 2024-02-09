@@ -16,13 +16,13 @@ spec:
         fr.doodle.service: back
     spec:
       containers:
-          env:
-            - name: MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED
-              value: "true"
-          image: registry.gitlab.com/devops4115904/doodlestudent/doodleback:latest
-          name: back
-          ports:
-            - containerPort: 8080
+      - name: back
+        image: registry.gitlab.com/devops4115904/doodlestudent/doodleback:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED
+          value: "true"
       restartPolicy: Always
       imagePullSecrets:
-        - name: doodle-app-secret
+      - name: doodle-app-secret
