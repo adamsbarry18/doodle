@@ -18,10 +18,10 @@ spec:
         fr.doodle.service: front
     spec:
       containers:
-      - image: localhost:32000/mbarry/doodle-front
+      - image: registry.gitlab.com/devops4115904/doodlestudent/doodlefront:latest
         name: front
         ports:
         - containerPort: 80
-        resources: {}
       restartPolicy: Always
-status: {}
+      imagePullSecrets:
+        - name: doodle-app-secret
