@@ -17,9 +17,8 @@ build_img:
     - docker:dind
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build --cache-from $CI_REGISTRY_IMAGE/doodlefront:latest -t $CI_REGISTRY_IMAGE/doodlefront:$CI_COMMIT_SHA doodlestudent/front
-    - docker push $CI_REGISTRY_IMAGE/doodlefront:$CI_COMMIT_SHA
-    - docker build --cache-from $CI_REGISTRY_IMAGE/doodleback:latest -t $CI_REGISTRY_IMAGE/doodleback:$CI_COMMIT_SHA doodlestudent/api
-    - docker push $CI_REGISTRY_IMAGE/doodleback:$CI_COMMIT_SHA
+    - docker build -t $CI_REGISTRY/evops4115904/doodlestudent/front/doodlefront
+    - docker push $CI_REGISTRY/evops4115904/doodlestudent/front/doodlefront
+    - echo "Image built"
 
 
