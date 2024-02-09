@@ -19,6 +19,8 @@ build_img:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY 
     - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest $CI_PROJECT_DIR/front
     - docker push $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest
+    - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodleback:latest $CI_PROJECT_DIR/api
+    - docker push $CI_REGISTRY/devops4115904/doodlestudent/doodleback:latest
     - echo "Image construite"
 
 
