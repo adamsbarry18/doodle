@@ -16,12 +16,10 @@ build_img:
   services:
     - docker:dind
   script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - echo $CI_PROJECT_DIR
-    - ls -la $CI_PROJECT_DIR
-    - ls -la $CI_PROJECT_DIR/front
-    - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest .
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY 
+    - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest $CI_PROJECT_DIR/front
     - docker push $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest
-    - echo "Image built"
+    - echo "Image construite"
+
 
 
