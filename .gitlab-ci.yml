@@ -1,4 +1,6 @@
-
+variables:
+  DOODLE_PROJECT_PATH: "devops4115904/doodlestudent/"
+  
 stages:
   - build
   - test
@@ -11,17 +13,25 @@ unit-test-job:   # This job runs in the test
     - echo "Code coverage is 90%"
 
 build_img:
-  image: docker
   stage: build
+  image: docker
   services:
     - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - echo "Logging into Docker registry..."
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
   script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY 
-    - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest $CI_PROJECT_DIR/front
-    - docker push $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest
-    - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodleback:latest $CI_PROJECT_DIR/api
-    - docker push $CI_REGISTRY/devops4115904/doodlestudent/doodleback:latest
-    - echo "Image construite"
+    - echo "Building and pushing front-end Docker image..."
+    - docker build -t "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodlefront:latest" "$CI_PROJECT_DIR/front"
+    - docker push "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodlefront:latest"
+    - echo "Front-end image built and pushed successfully."
+    - echo "Building and pushing back-end Docker image..."
+    - docker build -t "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodleback:latest" "$CI_PROJECT_DIR/api"
+    - docker push "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodleback:latest"
+    - echo "Back-end image built and pushed successfully."
+    - echo "Image construction completed."
 
 
 
