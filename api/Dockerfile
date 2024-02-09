@@ -1,8 +1,5 @@
 FROM ubuntu
-
-# Copiez tous les fichiers du répertoire actuel dans l'image Docker
 COPY . .
-
 # Mettez à jour les paquets et installez OpenJDK 17
 RUN apt-get update && apt-get install --no-install-recommends -y openjdk-17-jdk maven
 

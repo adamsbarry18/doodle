@@ -16,7 +16,7 @@ spec:
         fr.doodle.service: back
     spec:
       containers:
-      - name: back
+      - name: back 
         image: registry.gitlab.com/devops4115904/doodlestudent/doodleback:latest
         ports:
         - containerPort: 8080
