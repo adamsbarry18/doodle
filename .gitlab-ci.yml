@@ -2,10 +2,12 @@ variables:
   DOODLE_PROJECT_PATH: "devops4115904/doodlestudent"
   IMAGE_TAG_FRONT: "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodlefront:latest"
   IMAGE_TAG_BACK: "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodleback:latest"
+  KUBE_CONTEXT: devops4115904/doodlestudent:k8s-connection
 
 stages:
   - test
   - build
+  - deploy
 
 unit-test-job:   # Ce job s'exécute dans le stage de test
   stage: test    # Il ne démarre que lorsque le job dans le stage de build est terminé avec succès.
@@ -26,3 +28,19 @@ build_img:
     - docker push $IMAGE_TAG_BACK
     - echo "Images construites"
     
+deploy_kubernetes:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl get pods
+    - kubectl get nodes -o wide
+    - echo "Deployment vuetest app to K8S"
+    - ls $CI_PROJECT_DIR/k8s
+    - kubectl apply -f $CI_PROJECT_DIR/k8s/
+    - kubectl get pods
+    - kubectl get svc
+
+
