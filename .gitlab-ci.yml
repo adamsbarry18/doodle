@@ -1,5 +1,5 @@
 variables:
-  DOODLE_PROJECT_PATH: "devops4115904/doodlestudent/"
+  DOODLE_PROJECT_PATH: "devops4115904/doodlestudent"
   IMAGE_TAG_FRONT: "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodlefront:latest"
   IMAGE_TAG_BACK: "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodleback:latest"
 
