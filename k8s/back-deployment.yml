@@ -25,4 +25,4 @@ spec:
           value: "true"
       restartPolicy: Always
       imagePullSecrets:
-      - name: doodle-app-secret
+        - name: doodle-app-secret
