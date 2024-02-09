@@ -1,37 +1,28 @@
 variables:
   DOODLE_PROJECT_PATH: "devops4115904/doodlestudent/"
-  
-stages:
-  - build
-  - test
+  IMAGE_TAG_FRONT: "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodlefront:latest"
+  IMAGE_TAG_BACK: "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodleback:latest"
 
-unit-test-job:   # This job runs in the test
-  stage: test    # It only starts when the job in the build stage completes successfully.
+stages:
+  - test
+  - build
+
+unit-test-job:   # Ce job s'exécute dans le stage de test
+  stage: test    # Il ne démarre que lorsque le job dans le stage de build est terminé avec succès.
   script:
-    - echo "Running unit tests... This will take about 60 seconds."
-    - sleep 60
-    - echo "Code coverage is 90%"
+    - echo "Exécution des tests unitaires... Cela prendra environ 60 secondes."
+    - echo "La couverture de code est de 90%"
 
 build_img:
-  stage: build
   image: docker
+  stage: build
   services:
     - docker:dind
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-  before_script:
-    - echo "Logging into Docker registry..."
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
   script:
-    - echo "Building and pushing front-end Docker image..."
-    - docker build -t "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodlefront:latest" "$CI_PROJECT_DIR/front"
-    - docker push "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodlefront:latest"
-    - echo "Front-end image built and pushed successfully."
-    - echo "Building and pushing back-end Docker image..."
-    - docker build -t "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodleback:latest" "$CI_PROJECT_DIR/api"
-    - docker push "$CI_REGISTRY/$DOODLE_PROJECT_PATH/doodleback:latest"
-    - echo "Back-end image built and pushed successfully."
-    - echo "Image construction completed."
-
-
-
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY 
+    - docker build -t $IMAGE_TAG_FRONT $CI_PROJECT_DIR/front
+    - docker push $IMAGE_TAG_FRONT
+    - docker build -t $IMAGE_TAG_BACK $CI_PROJECT_DIR/api
+    - docker push $IMAGE_TAG_BACK
+    - echo "Images construites"
+    
