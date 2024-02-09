@@ -17,8 +17,7 @@ build_img:
     - docker:dind
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - echo $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest
+    - docker build -t $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest .
     - docker push $CI_REGISTRY/devops4115904/doodlestudent/doodlefront:latest
     - echo "Image built"
 
