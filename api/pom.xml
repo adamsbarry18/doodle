@@ -12,7 +12,7 @@
   
   <properties>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
-    <maven.compiler.release>17</maven.compiler.release>
+	<maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
@@ -20,6 +20,8 @@
     <quarkus.platform.version>3.2.4.Final</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0</surefire-plugin.version>
+    <quarkus.native.additional-build-args>--initialize-at-run-time=org.apache.http.impl.auth.NTLMEngineImpl,-H:ReflectionConfigurationFiles=reflection-config.json,-H:IncludeResourceBundles=sun.util.resources.TimeZoneNames</quarkus.native.additional-build-args>
+    <quarkus.package.type>native</quarkus.package.type>
   </properties>
   
   <dependencyManagement>
@@ -69,7 +71,7 @@
           <name>native</name>
         </property>
       </activation>
-      
+
       <build>
         <plugins>
           <plugin>
@@ -85,31 +87,14 @@
                   <systemPropertyVariables>
                     <native.image.path>${project.build.directory}/${project.build.finalName}</native.image.path>
                     <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                    <!--suppress UnresolvedMavenProperty -->
                     <maven.home>${maven.home}</maven.home>
                   </systemPropertyVariables>
                 </configuration>
               </execution>
             </executions>
           </plugin>
-		  	<plugin>
-				<groupId>io.quarkus</groupId>
-				<artifactId>quarkus-maven-plugin</artifactId>
-				<version>${quarkus.platform.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
-        	</plugin>
         </plugins>
-        
-        <properties>
-          <quarkus.native.additional-build-args>--initialize-at-run-time=org.apache.http.impl.auth.NTLMEngineImpl,-H:ReflectionConfigurationFiles=reflection-config.json,-H:IncludeResourceBundles=sun.util.resources.TimeZoneNames</quarkus.native.additional-build-args>
-          <skipITs>false</skipITs>
-          <quarkus.package.type>native</quarkus.package.type>
-        </properties>
       </build>
     </profile>
   </profiles>
