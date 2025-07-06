@@ -4,7 +4,10 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist/tlcfront" }
+      "config": { 
+        "distDir": "dist/tlcfront",
+        "buildCommand": "npm run build:prod"
+      }
     }
   ],
   "routes": [
