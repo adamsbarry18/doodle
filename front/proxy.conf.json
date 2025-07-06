@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://api-doodle-h2fya8esf7e8bpd8.canadacentral-01.azurewebsites.net/",
+    "target": "https://api-doodle-h2fya8esf7e8bpd8.canadacentral-01.azurewebsites.net",
     "secure": true,
     "logLevel": "debug",
     "changeOrigin": true
