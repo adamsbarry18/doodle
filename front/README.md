@@ -1,27 +1,74 @@
-# Tlcfront
+# Doodle Frontend (Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
+Angular application for the Doodle meeting scheduler user interface.
 
-## Development server
+---
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## 🚀 Features
 
-## Code scaffolding
+- Create date polls
+- Select and vote on proposed slots
+- Share invitation and admin links
+- Access chat room and collaborative pad
+- Responsive, modern UI
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## 🏗️ Structure
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+src/
+├── app/
+│   ├── create-poll-component/   # Poll creation
+│   ├── answer-poll/             # Answering a poll
+│   ├── admin-poll/              # Poll administration
+│   ├── show-comments/           # Comments display
+│   └── ...                      # Other components
+├── assets/                      # Images, icons, etc.
+├── environments/                # Environment configs
+└── ...
+```
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🚀 Quick Start
 
-## Running end-to-end tests
+### Prerequisites
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- Node.js >= 20
+- npm >= 10
 
-## Further help
+### Installation
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```bash
+cd front
+npm install
+```
+
+### Development server
+
+```bash
+npm start
+# Access http://localhost:4200
+```
+
+### Production build
+
+```bash
+npm run build --prod
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+npm test
+```
+
+---
+
+## Useful Links
+
+- [Angular CLI](https://angular.io/cli)
+- [Vercel](https://vercel.com/)
