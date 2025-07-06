@@ -1,8 +1,8 @@
 doodle:
-  usepad: true
-  internalPadUrl: "${DOODLE_INTERNAL_PAD_URL:http://localhost:9001/}"
-  externalPadUrl: "${DOODLE_EXTERNAL_PAD_URL:http://localhost:9001/}"
-  padApiKey: "19d89ca52bc0fa4f19d6325464d9d7a032649b9fa68c111514627081e2784b4a"
+  usepad: false
+  internalPadUrl: "${DOODLE_INTERNAL_PAD_URL:https://pad.riseup.net/}"
+  externalPadUrl: "${DOODLE_EXTERNAL_PAD_URL:https://pad.riseup.net/}"
+  padApiKey: ""
   organizermail: "mabarry2018@gmail.com"
   tmpfolder: "/tmp/excelFiles"
 quarkus:

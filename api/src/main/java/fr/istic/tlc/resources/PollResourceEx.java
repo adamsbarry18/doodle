@@ -112,12 +112,18 @@ public class PollResourceEx {
 		// On enregistre le poll dans la bdd
 		String padId = Utils.getInstance().generateSlug(15);
 		if (this.usePad) {
-			if (client == null) {
-				client = new EPLiteClient(padUrl, apikey);
+			try {
+				if (client == null) {
+					client = new EPLiteClient(padUrl, apikey);
+				}
+				client.createPad(padId);
+				initPad(poll.getTitle(), poll.getLocation(), poll.getDescription(), client, padId);
+				poll.setPadURL(externalPadUrl + "p/" + padId);
+			} catch (Exception e) {
+				// Si la création du pad échoue, on continue sans pad
+				System.err.println("Erreur lors de la création du pad: " + e.getMessage());
+				poll.setPadURL("");
 			}
-			client.createPad(padId);
-			initPad(poll.getTitle(), poll.getLocation(), poll.getDescription(), client, padId);
-			poll.setPadURL(externalPadUrl + "p/" + padId);
 		} 
 		pollRepository.persist(poll);
 		return new ResponseEntity<>(poll, HttpStatus.CREATED);
