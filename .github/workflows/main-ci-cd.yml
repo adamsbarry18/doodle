@@ -22,7 +22,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Check for changes
         id: filter
         uses: dorny/paths-filter@v2
@@ -34,175 +33,24 @@ jobs:
               - 'api/**'
 
   # ==========================================
-  # Job: Frontend Test (if needed)
+  # Job: Frontend CI/CD (reusable workflow)
   # ==========================================
-  frontend-test:
-    name: Frontend Test
-    runs-on: ubuntu-latest
+  frontend:
+    name: Frontend CI/CD
     needs: changes
     if: needs.changes.outputs.frontend == 'true'
-    defaults:
-      run:
-        working-directory: ./front
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-          cache-dependency-path: "./front/package-lock.json"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint code
-        run: npm run lint
-        continue-on-error: true
-
-      - name: Type check
-        run: npx tsc --noEmit
-        continue-on-error: true
-
-      - name: Run unit tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
-        continue-on-error: true
+    uses: ./.github/workflows/frontend-ci-cd.yml
+    with: {}
 
   # ==========================================
-  # Job: Backend Test (if needed)
+  # Job: Backend CI/CD (reusable workflow)
   # ==========================================
-  backend-test:
-    name: Backend Test
-    runs-on: ubuntu-latest
+  backend:
+    name: Backend CI/CD
     needs: changes
     if: needs.changes.outputs.backend == 'true'
-    defaults:
-      run:
-        working-directory: ./api
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: "17"
-          distribution: "temurin"
-          cache: "maven"
-
-      - name: Run tests
-        run: ./mvnw test
-        continue-on-error: true
-
-  # ==========================================
-  # Job: Frontend Build & Deploy (if needed)
-  # ==========================================
-  frontend-deploy:
-    name: Frontend Build & Deploy
-    runs-on: ubuntu-latest
-    needs: [changes, frontend-test]
-    if: |
-      needs.changes.outputs.frontend == 'true' && 
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && 
-      github.event_name == 'push'
-    defaults:
-      run:
-        working-directory: ./front
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-          cache-dependency-path: "./front/package-lock.json"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build application
-        run: npm run build --prod
-        env:
-          NODE_ENV: production
-
-      - name: Deploy to Vercel
-        if: github.ref == 'refs/heads/main'
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./front
-          vercel-args: "--prod"
-
-  # ==========================================
-  # Job: Backend Build & Deploy (if needed)
-  # ==========================================
-  backend-deploy:
-    name: Backend Build & Deploy
-    runs-on: ubuntu-latest
-    needs: [changes, backend-test]
-    if: |
-      needs.changes.outputs.backend == 'true' && 
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && 
-      github.event_name == 'push'
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/doodle-backend
-          tags: |
-            type=sha,prefix=,suffix=,format=short
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=${{ github.ref_name }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./api
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            BUILD_ENV=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
-            BUILD_ID=${{ github.sha }}
-
-      - name: Deploy to Azure Web App
-        if: github.ref == 'refs/heads/main'
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          images: ghcr.io/${{ github.repository }}/doodle-backend:latest
+    uses: ./.github/workflows/backend-ci-cd.yml
+    with: {}
 
   # ==========================================
   # Job: Full Stack Deploy Summary (only on main)
@@ -210,7 +58,7 @@ jobs:
   full-deploy-summary:
     name: Full Stack Deploy Summary
     runs-on: ubuntu-latest
-    needs: [changes, frontend-deploy, backend-deploy]
+    needs: [changes, frontend, backend]
     if: |
       github.ref == 'refs/heads/main' && 
       (needs.changes.outputs.frontend == 'true' || needs.changes.outputs.backend == 'true')
@@ -218,7 +66,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Deploy Summary
         run: |
           echo "🚀 Deployment Summary"
@@ -226,7 +73,6 @@ jobs:
           echo "Frontend changes: ${{ needs.changes.outputs.frontend }}"
           echo "Backend changes: ${{ needs.changes.outputs.backend }}"
           echo "Deployment completed successfully!"
-
       - name: Notify deployment
         run: |
           echo "✅ Full stack deployment completed!"
