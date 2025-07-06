@@ -24,19 +24,43 @@ services:
       - "2525:25"
   api:
     container_name: api
-    image: doodleback
-    command: ["java","-jar","target/tlcdemoApp-1.0.0-SNAPSHOT.jar","-Dquarkus.datasource.username=tlc","-Dquarkus.datasource.password=tlc","-Dquarkus.datasource.jdbc.url=jdbc:mysql://db:3306/tlc?useUnicode=true&serverTimezone=Europe/Paris","-Ddoodle.internalPadUrl=http://etherpad:9001","-Ddooble.externalPadUrl=http://pad.tlc.fr:90/"]
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+      - etherpad
+      - mail
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/q/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
   
   front:
     container_name: front
-    image: doodlefront
+    build:
+      context: ../front
+      dockerfile: Dockerfile
     ports:
       - 90:80
     volumes:
       - ./exampleconf/doodle.conf:/etc/nginx/conf.d/doodle.conf
       - ./exampleconf/myadmin.conf:/etc/nginx/conf.d/myadmin.conf
       - ./exampleconf/pad.conf:/etc/nginx/conf.d/pad.conf
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
   
   myadmin:
     image: phpmyadmin

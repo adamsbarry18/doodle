@@ -1,0 +1,83 @@
+name: Main CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
+  workflow_dispatch:
+
+jobs:
+  # ==========================================
+  # Job: Determine what to build
+  # ==========================================
+  changes:
+    name: Determine Changes
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changes
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            frontend:
+              - 'front/**'
+            backend:
+              - 'api/**'
+
+  # ==========================================
+  # Job: Frontend CI/CD (if needed)
+  # ==========================================
+  frontend:
+    name: Frontend CI/CD
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    uses: ./.github/workflows/frontend-ci-cd.yml
+
+  # ==========================================
+  # Job: Backend CI/CD (if needed)
+  # ==========================================
+  backend:
+    name: Backend CI/CD
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    uses: ./.github/workflows/backend-ci-cd.yml
+
+  # ==========================================
+  # Job: Full Stack Deploy (only on main)
+  # ==========================================
+  full-deploy:
+    name: Full Stack Deploy
+    runs-on: ubuntu-latest
+    needs: [changes, frontend, backend]
+    if: |
+      github.ref == 'refs/heads/main' && 
+      (needs.changes.outputs.frontend == 'true' || needs.changes.outputs.backend == 'true')
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy Summary
+        run: |
+          echo "🚀 Deployment Summary"
+          echo "===================="
+          echo "Frontend changes: ${{ needs.changes.outputs.frontend }}"
+          echo "Backend changes: ${{ needs.changes.outputs.backend }}"
+          echo "Deployment completed successfully!"
+
+      - name: Notify deployment
+        run: |
+          echo "✅ Full stack deployment completed!"
+          echo "Frontend: https://your-vercel-app.vercel.app"
+          echo "Backend: https://your-azure-app.azurewebsites.net"

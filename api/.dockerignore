@@ -6,6 +6,7 @@
 !src/
 !mvnw
 !mvnw.cmd
+!.mvn/
 !APIKEY.txt
 !docker-compose.yaml
 !Dockerfile

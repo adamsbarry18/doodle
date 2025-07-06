@@ -1,17 +1,17 @@
 doodle:
   usepad: true
-  internalPadUrl: "http://localhost:9001/"
-  externalPadUrl: "http://localhost:9001/"
+  internalPadUrl: "${DOODLE_INTERNAL_PAD_URL:http://localhost:9001/}"
+  externalPadUrl: "${DOODLE_EXTERNAL_PAD_URL:http://localhost:9001/}"
   padApiKey: "19d89ca52bc0fa4f19d6325464d9d7a032649b9fa68c111514627081e2784b4a"
   organizermail: "mabarry2018@gmail.com"
   tmpfolder: "/tmp/excelFiles"
 quarkus:
   datasource:
     db-kind: mysql
-    username: root
-    password:
+    username: "${QUARKUS_DATASOURCE_USERNAME:tlc}"
+    password: "${QUARKUS_DATASOURCE_PASSWORD:tlc}"
     jdbc:
-      url: jdbc:mysql://localhost:3306/tlc?useUnicode=true&serverTimezone=Europe/Paris
+      url: "${QUARKUS_DATASOURCE_JDBC_URL:jdbc:mysql://db:3306/tlc?useUnicode=true&serverTimezone=Europe/Paris}"
       driver: com.mysql.cj.jdbc.Driver
   hibernate-orm:
     validate-in-dev-mode: false
@@ -22,13 +22,9 @@ quarkus:
       generation: update
       globally-quoted-identifiers: true
   mailer:
-    from: test@quarkus.io
-    #    host: smtp.sendgrid.net
-    host: localhost
-    port: 2525
-    #    port: 465
-    #    ssl: true
-
-    #    username: ""
-    #    password: ""
+    from: "${QUARKUS_MAILER_FROM:test@quarkus.io}"
+    host: "${QUARKUS_MAILER_HOST:localhost}"
+    port: "${QUARKUS_MAILER_PORT:2525}"
+    username: "${QUARKUS_MAILER_USERNAME:}"
+    password: "${QUARKUS_MAILER_PASSWORD:}"
     mock: false
