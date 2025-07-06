@@ -7,6 +7,10 @@ on:
     branches: ["main", "dev"]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   # ==========================================
   # Job: Determine what to build
