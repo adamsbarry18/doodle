@@ -17,6 +17,9 @@ bin/
 *.iml
 *.iws
 
+# Env
+.env
+
 # NetBeans
 nb-configuration.xml
 

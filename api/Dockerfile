@@ -1,16 +1,23 @@
-FROM ubuntu
+FROM openjdk:17-jdk-slim
 
-# Copiez tous les fichiers du répertoire actuel dans l'image Docker
-COPY . .
+# Définir le répertoire de travail
+WORKDIR /app
 
-# Mettez à jour les paquets et installez OpenJDK 17
-RUN apt-get update && apt-get install --no-install-recommends -y openjdk-17-jdk maven
+# Copier le fichier pom.xml et mvnw
+COPY pom.xml mvnw ./
+COPY .mvn .mvn
 
-# Exécutez la commande Maven pour construire le projet
+# Copier le reste des fichiers source
+COPY src ./src
+
+# Installer Maven et curl pour le healthcheck
+RUN apt-get update && apt-get install -y maven curl
+
+# Construire l'application
 RUN mvn package -Dmaven.test.skip=true
 
-# Exposez le port 8080
+# Exposer le port 8080
 EXPOSE 8080
 
-# Définissez la commande à exécuter lorsque le conteneur Docker est lancé
-CMD command: ["java","-jar","target/tlcdemoApp-1.0.0-SNAPSHOT.jar","-Dquarkus.datasource.username=tlc","-Dquarkus.datasource.password=tlc","-Dquarkus.datasource.jdbc.url=jdbc:mysql://db:3306/tlc?useUnicode=true&serverTimezone=Europe/Paris","-Ddoodle.internalPadUrl=http://etherpad:9001","-Ddooble.externalPadUrl=http://pad.tlc.fr:90/"]
+# Commande pour démarrer l'application
+CMD ["java", "-jar", "target/quarkus-app/quarkus-run.jar"]
