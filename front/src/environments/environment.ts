@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: '/api',
+  apiUrl:
+    'https://api-doodle-h2fya8esf7e8bpd8.canadacentral-01.azurewebsites.net/api',
 };
 
 /*
