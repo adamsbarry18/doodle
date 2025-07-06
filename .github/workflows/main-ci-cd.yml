@@ -107,7 +107,7 @@ jobs:
     needs: [changes, frontend-test]
     if: |
       needs.changes.outputs.frontend == 'true' && 
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && 
+      github.ref == 'refs/heads/main' && 
       github.event_name == 'push'
     defaults:
       run:
@@ -151,7 +151,7 @@ jobs:
     needs: [changes, backend-test]
     if: |
       needs.changes.outputs.backend == 'true' && 
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && 
+      github.ref == 'refs/heads/main' && 
       github.event_name == 'push'
     permissions:
       contents: read
