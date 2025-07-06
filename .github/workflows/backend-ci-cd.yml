@@ -8,6 +8,7 @@ on:
     branches: ["main", "dev"]
     paths: ["api/**"]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   # ==========================================
