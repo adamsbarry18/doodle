@@ -167,6 +167,19 @@ export class CreatePollComponentComponent implements OnInit {
       validRange: {
         start: Date.now(),
       },
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay',
+      },
+      buttonText: {
+        today: "Aujourd'hui",
+        month: 'Mois',
+        week: 'Semaine',
+        day: 'Jour',
+        prev: '<',
+        next: '>',
+      },
     };
 
     this.actRoute.paramMap.subscribe((params) => {

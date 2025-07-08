@@ -1,13 +1,13 @@
 <div class="SmallCard_Container">
-    <div *ngFor="let card of cards"  class="SmallCard" [ngStyle]="card.style">
+  <div *ngFor="let card of cards" class="SmallCard" [ngStyle]="card.style">
     <div class="SmallCard_Image">
-      <img [src]="card.image" height="200px"/>
+      <img [src]="card.image" height="140px" />
     </div>
     <div class="SmallCard_Title">
       {{ card.title }}
     </div>
     <div class="SmallCard_Subtitle">
       {{ card.subtitle }}
-    </div>      
-</div>
+    </div>
+  </div>
 </div>

@@ -1,16 +1,52 @@
-.Author_MealPref {
-  font-weight: bold;
-  color: #4d3cf7;
+/* Modern Flat & Responsive Design */
+.Comments {
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px 0 rgba(60,72,88,0.08);
+  padding: 1.5rem 1rem;
+  margin: 1.5rem 0;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Comment h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.MealPref {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px 0 rgba(60,72,88,0.06);
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
 }
 
 .Author_Comment {
-  font-weight: bold;
-  color: #4d3cf7;
+  color: #4D3DF7;
+  font-weight: 600;
+  margin-right: 0.5rem;
 }
-.MealPref {
-  padding: 1rem 0;
-  font-size: 1.1rem;
-}
-.Comment {
-  padding: 1rem;
+
+@media (max-width: 600px) {
+  .Comments {
+    padding: 0.7rem 0.2rem;
+  }
+  .MealPref {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.98rem;
+  }
 }

@@ -1,38 +1,63 @@
-
+/* Modern Flat & Responsive Design */
 .SmallCard_Container {
-    display: flex;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 2rem 0;
 }
-  
-  
+
 .SmallCard {
-    background-color: white;
-    margin-right: 1rem; 
-    padding: 2rem;
-    border-radius: 0.5rem;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 rgba(60,72,88,0.10);
+  padding: 1.2rem 1rem 1.5rem 1rem;
+  max-width: 220px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.SmallCard:hover {
+  box-shadow: 0 6px 24px 0 rgba(60,72,88,0.18);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.SmallCard_Image img {
+  border-radius: 12px;
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 6px 0 rgba(60,72,88,0.10);
+}
+
+.SmallCard_Title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.SmallCard_Subtitle {
+  font-size: 0.98rem;
+  color: #fff;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .SmallCard_Container {
+    gap: 0.7rem;
   }
-  
-  .SmallCard_Image {
-    padding: 1rem;
-    margin-bottom: 1rem;
+  .SmallCard {
+    max-width: 100vw;
+    min-width: 120px;
+    padding: 0.7rem 0.5rem 1rem 0.5rem;
   }
-  
-  .SmallCard_Title {
-    padding: 1rem;
-    font-weight: 800;
-    text-align: center;
-    font-size: 1.2rem;
+  .SmallCard_Image img {
+    margin-bottom: 0.5rem;
   }
-  
-  .SmallCard_Subtitle {
-    text-align: center;
-  }
-  
-  .SmallCard:last-child {
-    margin-right: 0;
-  }
+}

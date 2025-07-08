@@ -1,9 +1,20 @@
+/* Modern Flat & Responsive Design */
+.Container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(60,72,88,0.10);
+}
+
 .Poll_Informations {
-  background-color: white;
+  background-color: #f9fafb;
   width: 100%;
   margin-top: 1rem;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
-  border-radius: 5px;
+  box-shadow: 0 2px 8px 0 rgba(60,72,88,0.08);
+  border-radius: 10px;
+  padding: 1.5rem;
 }
 
 .Meal_Preferences {
@@ -13,25 +24,83 @@
 
 .Poll_Has_Meal {
   display: flex;
-  flex-direction: row;
-  flex: 1;
-}
-
-.Poll_Has_Meal {
-  display: flex;
   align-items: center;
   justify-content: center;
+  background: #f0f4f8;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  color: #4D3DF7;
+  font-weight: 500;
+  font-size: 1.1rem;
 }
 
 .Poll_Description_Title {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #243B53;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .Poll_Infos {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .Poll_Info {
-  flex: 1;
+  flex: 1 1 200px;
+}
+
+.Poll_Location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  color: #303030;
+  font-weight: 500;
+}
+
+.Dates {
+  color: #7b8794;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px 0 rgba(60,72,88,0.06);
+}
+
+.table th, .table td {
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+}
+
+.table th {
+  background: #4D3DF7;
+  color: #fff;
+  font-weight: 600;
+}
+
+.table tr:nth-child(even) {
+  background: #f5f7fa;
+}
+
+@media (max-width: 700px) {
+  .Container {
+    padding: 1rem 0.2rem;
+  }
+  .Poll_Infos {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .table th, .table td {
+    padding: 0.4rem 0.2rem;
+    font-size: 0.95rem;
+  }
 }

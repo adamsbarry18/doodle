@@ -1,40 +1,66 @@
+/* Modern Flat & Responsive Design */
 .Links {
   display: flex;
-  font-weight: 600;
-  width: 100%;
-  flex-direction: row;
   justify-content: space-between;
-  background-color: #4D3DF7;
-  border-radius: 5px 5px 0 0;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+  align-items: center;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px 0 rgba(60,72,88,0.08);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.Links_Right {
+.Links_Left, .Links_Right {
   display: flex;
-}
-
-.Links_Left {
-  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
 }
 
 .Feat_Link {
-  padding: 0.7rem 1rem;
-  text-decoration: none;
-  color: white;
   display: flex;
   align-items: center;
-  transition: all 0.3s linear;
-  cursor: pointer;
-}
-
-.Feat_Link:last-child {
-  border-radius: 0 5px 0 0;
-}
-
-.Feat_Link.Unique {
-  border-radius: 5px 5px 0 0!important;
+  background: #fff;
+  color: #4D3DF7;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 1px 4px 0 rgba(60,72,88,0.06);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  font-size: 1.05rem;
 }
 
 .Feat_Link:hover {
-  background-color: #0C008C;
+  background: #4D3DF7;
+  color: #fff;
+  box-shadow: 0 4px 12px 0 rgba(60,72,88,0.12);
+}
+
+.Unique {
+  background: #e9eaff;
+  color: #303030;
+}
+
+.Unique:hover {
+  background: #4D3DF7;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .Links {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.7rem 0.5rem;
+    gap: 0.5rem;
+  }
+  .Links_Left, .Links_Right {
+    gap: 0.5rem;
+  }
+  .Feat_Link {
+    font-size: 0.98rem;
+    padding: 0.4rem 0.7rem;
+  }
 }

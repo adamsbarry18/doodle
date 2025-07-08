@@ -8,43 +8,66 @@
     height: 100%;
   }
 
+  /* Modern Flat & Responsive Design */
   .Home_Container {
-    width: 1024px;
-    margin: 0 auto;
-    height: 100vh;
-    display: flex;
-    align-items: center;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem 1rem;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(60,72,88,0.10);
   }
   
   .Home_Wrapper {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
   }
   
-  .Home_Logo {
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .Home_Logo img {
+    border-radius: 16px;
+    box-shadow: 0 2px 12px 0 rgba(60,72,88,0.10);
+    margin-bottom: 1.5rem;
+    max-width: 180px;
   }
   
   .Home_Button {
-    width: 100%;
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
   }
   
   .Home_CreateLink {
-    padding: 1rem;
-    width: 100%;
-    background-color: #43dbac;
-    color: white;
+    background-color: #4D3DF7;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+    padding: 0.7rem 2.2rem;
     text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.3rem;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .Home_CreateLink:hover {
+    background-color: #3525E6;
+    box-shadow: 0 4px 12px 0 rgba(60,72,88,0.12);
+  }
+
+  @media (max-width: 700px) {
+    .Home_Container {
+      padding: 1rem 0.2rem;
+    }
+    .Home_Logo img {
+      max-width: 120px;
+      margin-bottom: 1rem;
+    }
+    .Home_Button {
+      margin-top: 1rem;
+    }
+    .Home_CreateLink {
+      font-size: 1rem;
+      padding: 0.5rem 1.2rem;
+    }
   }

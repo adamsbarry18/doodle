@@ -1,3 +1,27 @@
+/* Global Modern App Styles */
+body, html {
+  background: #f0f4f8;
+  min-height: 100vh;
+  font-family: 'Montserrat', 'Open Sans', 'Roboto', sans-serif;
+  color: #303030;
+  margin: 0;
+  padding: 0;
+}
+
+#main-content, app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pour éviter que le contenu ne touche les bords sur mobile */
+@media (max-width: 700px) {
+  body, html {
+    padding: 0;
+    margin: 0;
+  }
+}
+
 .Container {
     max-width: 800px;
     margin: 2rem auto;
