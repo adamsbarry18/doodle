@@ -11,6 +11,7 @@
     }
   ],
   "routes": [
+    { "src": "/api/(.*)", "dest": "https://api-doodle-h2fya8esf7e8bpd8.canadacentral-01.azurewebsites.net/api/$1" },
     { "src": "/assets/(.*)", "dest": "/assets/$1" },
     { "src": "/favicon.ico", "dest": "/favicon.ico" },
     { "src": "/(.*\\.js)", "dest": "/$1" },
