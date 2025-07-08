@@ -1,0 +1,38 @@
+# Node.js / Angular
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.*
+
+# Java / Maven / Quarkus
+api/target/
+api/.env
+api/.env.*
+
+# Logs
+logs/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Coverage
+coverage/
+front/coverage/
+api/coverage/
+
+# Misc
+front/.angular/
+front/.output/
